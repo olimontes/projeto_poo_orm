@@ -104,7 +104,7 @@ public class Aluno
         setIdade();
     }
 
-    @PostLoad
+//    @PostLoad
     private void setIdade() {
         idade = (int) nascimento.until(LocalDate.now(), ChronoUnit.YEARS);
     }

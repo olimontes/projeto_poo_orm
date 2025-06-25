@@ -51,4 +51,27 @@ public class AlunoRepository {
 
         return aluno.getId();
     }
+    
+    public Long update(Aluno aluno) {
+        EntityManager em = DataSourceFactory.getEntityManager();
+        EntityTransaction tx = em.getTransaction();
+
+        try {
+            tx.begin();
+            if (aluno.getId() != null) {
+                em.merge(aluno);
+            }
+            tx.commit();
+        } catch (Exception e) {
+            if (tx != null && tx.isActive()) {
+                tx.rollback();
+                em.close();
+                throw e;
+            }
+        } finally {
+            em.close();
+        }
+
+        return aluno.getId();
+    }
 }

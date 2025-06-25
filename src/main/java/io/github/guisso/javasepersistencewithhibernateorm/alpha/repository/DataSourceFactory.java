@@ -18,14 +18,13 @@ package io.github.guisso.javasepersistencewithhibernateorm.alpha.repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityManagerFactory;
+import jakarta.persistence.Persistence;
 
 /**
  * Data source factory for MySQL DBRMS
- * 
- * DDL:
- * CREATE DATABASE gestaoescolar
- * DEFAULT CHARACTER SET utf8mb4
- * COLLATE utf8mb4_unicode_ci;
+ *
+ * DDL: CREATE DATABASE gestaoescolar DEFAULT CHARACTER SET utf8mb4 COLLATE
+ * utf8mb4_unicode_ci;
  *
  * @author Luis Guisso &lt;luis dot guisso at ifnmg dot edu dot br&gt;
  * @version 0.1
@@ -33,14 +32,22 @@ import jakarta.persistence.EntityManagerFactory;
  */
 public class DataSourceFactory {
 
-    private EntityManagerFactory emf;
-    private final String PU_NAME = "gestaoEscolarPU";
+    private static EntityManagerFactory emf;
+    private static final String PU_NAME = "gestaoEscolarPU";
 
-    private static EntityManagerFactory getConnection() {
-        return null;
+    // EntityManagerFactory can have a persistent lifecycle
+    private static EntityManagerFactory getEMFactory() {
+        if (emf == null || !emf.isOpen()) {
+            emf = Persistence.createEntityManagerFactory(PU_NAME);
+        }
+
+        return emf;
     }
 
+    // EntityManager is not thread safe! A desktop application is
+    // single threaded, but do not share the object for safety
+    // (open and close in the processing method)
     public static EntityManager getEntityManager() {
-        return null;
+        return DataSourceFactory.getEMFactory().createEntityManager();
     }
 }

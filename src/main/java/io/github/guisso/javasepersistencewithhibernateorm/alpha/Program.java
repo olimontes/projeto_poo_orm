@@ -16,9 +16,13 @@
  */
 package io.github.guisso.javasepersistencewithhibernateorm.alpha;
 
+import io.github.guisso.javasepersistencewithhibernateorm.alpha.aluno.Aluno;
+import io.github.guisso.javasepersistencewithhibernateorm.alpha.aluno.AlunoRepository;
+import java.time.LocalDate;
+
 /**
  * Runs tests of the "Alpha" version
- * 
+ *
  * @author Luis Guisso &lt;luis dot guisso at ifnmg dot edu dot br&gt;
  * @version 0.1
  * @since 0.1, 2025-06-25
@@ -26,6 +30,19 @@ package io.github.guisso.javasepersistencewithhibernateorm.alpha;
 public class Program {
 
     public static void main(String[] args) {
+        // Object to be persisted
+        Aluno aluno = new Aluno();
 
+        // !!! ID should not be set!!!
+        //aluno.setId(1234L);
+        
+        aluno.setMatricula(20250001);
+        aluno.setNome("Ana Zaira");
+        aluno.setNascimento(LocalDate.of(2000, 6, 1));
+
+        AlunoRepository repository = new AlunoRepository();
+
+        // Persistence
+        repository.save(aluno);
     }
 }

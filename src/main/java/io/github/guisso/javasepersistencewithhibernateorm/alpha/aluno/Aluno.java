@@ -21,8 +21,10 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Transient;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 import java.util.Objects;
 
 /**
@@ -50,6 +52,9 @@ public class Aluno
 
     @Column(nullable = true)
     private LocalDate nascimento;
+
+    @Transient
+    private Integer idade;
 
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
     public Long getId() {
@@ -91,7 +96,13 @@ public class Aluno
         if (nascimento.isAfter(LocalDate.now())) {
             throw new IllegalArgumentException("A data de nascimento não pode ser futura");
         }
+
+        idade = (int) nascimento.until(LocalDate.now(), ChronoUnit.YEARS);
         this.nascimento = nascimento;
+    }
+
+    public Integer getIdade() {
+        return idade;
     }
     //</editor-fold>
 
@@ -114,6 +125,17 @@ public class Aluno
             return false;
         }
         return hashCode() == other.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return "Aluno{"
+                + "id=" + id
+                + ", matricula=" + matricula
+                + ", nome=" + nome
+                + ", nascimento=" + nascimento
+                + ", idade=" + idade
+                + '}';
     }
     //</editor-fold>
 

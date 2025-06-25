@@ -16,11 +16,14 @@
  */
 package io.github.guisso.javasepersistencewithhibernateorm.alpha.aluno;
 
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import java.io.Serializable;
+import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Aluno entity
@@ -39,6 +42,15 @@ public class Aluno
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
+    private Integer matricula;
+
+    @Column(nullable = false, length = 45)
+    private String nome;
+
+    @Column(nullable = true)
+    private LocalDate nascimento;
+
     //<editor-fold defaultstate="collapsed" desc="Getters/Setters">
     public Long getId() {
         return id;
@@ -47,32 +59,61 @@ public class Aluno
     public void setId(Long id) {
         this.id = id;
     }
+
+    public Integer getMatricula() {
+        return matricula;
+    }
+
+    public void setMatricula(Integer matricula) {
+        if (matricula < 0) {
+            throw new IllegalArgumentException("A matrícula tem que ser positiva");
+        }
+        this.matricula = matricula;
+    }
+
+    public String getNome() {
+        return nome;
+    }
+
+    public void setNome(String nome) {
+        // TODO E o limite mínimo de caracteres
+        if (nome == null || nome.isBlank() || nome.length() > 45) {
+            throw new IllegalArgumentException("O nome tem que ter até 45 caracteres");
+        }
+        this.nome = nome;
+    }
+
+    public LocalDate getNascimento() {
+        return nascimento;
+    }
+
+    public void setNascimento(LocalDate nascimento) {
+        if (nascimento.isAfter(LocalDate.now())) {
+            throw new IllegalArgumentException("A data de nascimento não pode ser futura");
+        }
+        this.nascimento = nascimento;
+    }
     //</editor-fold>
 
     //<editor-fold defaultstate="collapsed" desc="hashCode/equals/toString">
     @Override
     public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
+        int hash = 3;
+        hash = 79 * hash + Objects.hashCode(this.matricula);
+        hash = 79 * hash + Objects.hashCode(this.nome);
+        hash = 79 * hash + Objects.hashCode(this.nascimento);
         return hash;
     }
 
     @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Aluno)) {
+    public boolean equals(Object other) {
+        if (this == other) {
+            return true;
+        }
+        if (other == null || getClass() != other.getClass()) {
             return false;
         }
-        Aluno other = (Aluno) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "io.github.guisso.javasepersistencewithhibernateorm.alpha.aluno.Aluno[ id=" + id + " ]";
+        return hashCode() == other.hashCode();
     }
     //</editor-fold>
 

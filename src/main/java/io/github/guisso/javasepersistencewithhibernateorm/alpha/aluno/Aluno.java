@@ -21,6 +21,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.PostLoad;
 import jakarta.persistence.Transient;
 import java.io.Serializable;
 import java.time.LocalDate;
@@ -97,15 +98,23 @@ public class Aluno
             throw new IllegalArgumentException("A data de nascimento não pode ser futura");
         }
 
-        idade = (int) nascimento.until(LocalDate.now(), ChronoUnit.YEARS);
         this.nascimento = nascimento;
+        
+        // nascimento changes and updates idade
+        setIdade();
     }
 
+    @PostLoad
+    private void setIdade() {
+        idade = (int) nascimento.until(LocalDate.now(), ChronoUnit.YEARS);
+    }
+    
     public Integer getIdade() {
         return idade;
     }
     //</editor-fold>
-
+    
+    
     //<editor-fold defaultstate="collapsed" desc="hashCode/equals/toString">
     @Override
     public int hashCode() {

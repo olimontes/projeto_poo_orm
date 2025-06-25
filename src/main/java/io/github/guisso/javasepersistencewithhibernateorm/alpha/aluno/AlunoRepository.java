@@ -19,6 +19,8 @@ package io.github.guisso.javasepersistencewithhibernateorm.alpha.aluno;
 import io.github.guisso.javasepersistencewithhibernateorm.alpha.repository.DataSourceFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.TypedQuery;
+import java.util.List;
 
 /**
  * Repository actions for Aluno entity
@@ -51,8 +53,9 @@ public class AlunoRepository {
 
         return aluno.getId();
     }
-    
+
     public Long update(Aluno aluno) {
+
         EntityManager em = DataSourceFactory.getEntityManager();
         EntityTransaction tx = em.getTransaction();
 
@@ -73,5 +76,21 @@ public class AlunoRepository {
         }
 
         return aluno.getId();
+    }
+
+    public List<Aluno> findAll() {
+
+        EntityManager em = DataSourceFactory.getEntityManager();
+
+        try {
+            TypedQuery<Aluno> query
+                    = em.createQuery(
+                            "SELECT a FROM Aluno a",
+                            Aluno.class
+                    );
+            return query.getResultList();
+        } finally {
+            em.close();
+        }
     }
 }

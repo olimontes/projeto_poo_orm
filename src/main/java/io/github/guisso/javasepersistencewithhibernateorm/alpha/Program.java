@@ -44,5 +44,28 @@ public class Program {
 
         // Persistence
         repository.save(aluno);
+        
+//        +-----------+------------+----+-----------+
+//        | matricula | nascimento | id | nome      |
+//        +-----------+------------+----+-----------+
+//        |  20250001 | 2000-06-01 |  1 | Ana Zaira |
+//        +-----------+------------+----+-----------+
+//        
+        System.out.println("> " + aluno);
+        
+        // Object do be updated
+        aluno.setMatricula(987654);
+        
+        // Persistence
+        repository.update(aluno);
+        
+//        +-----------+------------+----+-----------+
+//        | matricula | nascimento | id | nome      |
+//        +-----------+------------+----+-----------+
+//        |    987654 | 2000-06-01 |  1 | Ana Zaira |
+//        +-----------+------------+----+-----------+
+        
+        System.out.println("> " + aluno);
+        
     }
 }

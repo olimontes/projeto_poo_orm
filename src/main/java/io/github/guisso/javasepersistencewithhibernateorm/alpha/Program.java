@@ -19,6 +19,7 @@ package io.github.guisso.javasepersistencewithhibernateorm.alpha;
 import io.github.guisso.javasepersistencewithhibernateorm.alpha.aluno.Aluno;
 import io.github.guisso.javasepersistencewithhibernateorm.alpha.aluno.AlunoRepository;
 import java.time.LocalDate;
+import java.util.List;
 
 /**
  * Runs tests of the "Alpha" version
@@ -31,41 +32,63 @@ public class Program {
 
     public static void main(String[] args) {
         // Object to be persisted
-        Aluno aluno = new Aluno();
+        Aluno a1 = new Aluno();
+        Aluno a2 = new Aluno();
 
         // !!! ID should not be set!!!
         //aluno.setId(1234L);
+//        
+        a1.setMatricula(20250001);
+        a1.setNome("Ana Zaira");
+        a1.setNascimento(LocalDate.of(2000, 6, 1));
         
-        aluno.setMatricula(20250001);
-        aluno.setNome("Ana Zaira");
-        aluno.setNascimento(LocalDate.of(2000, 6, 1));
+        a2.setMatricula(20250002);
+        a2.setNome("Beatriz Yana");
+        a2.setNascimento(LocalDate.of(2000, 10, 20));
 
         AlunoRepository repository = new AlunoRepository();
 
         // Persistence
-        repository.save(aluno);
+        repository.save(a1);
+        repository.save(a2);
         
-//        +-----------+------------+----+-----------+
-//        | matricula | nascimento | id | nome      |
-//        +-----------+------------+----+-----------+
-//        |  20250001 | 2000-06-01 |  1 | Ana Zaira |
-//        +-----------+------------+----+-----------+
+//        +-----------+------------+----+--------------+
+//        | matricula | nascimento | id | nome         |
+//        +-----------+------------+----+--------------+
+//        |  20250001 | 2000-06-01 |  1 | Ana Zaira    |
+//        |  20250002 | 2000-10-20 |  2 | Beatriz Yana |
+//        +-----------+------------+----+--------------+
 //        
-        System.out.println("> " + aluno);
+        System.out.println("> " + a1);
+        System.out.println("> " + a2);
         
-        // Object do be updated
-        aluno.setMatricula(987654);
+        // Object to be updated
+        a1.setMatricula(987654);
         
         // Persistence
-        repository.update(aluno);
+        repository.update(a1);
         
-//        +-----------+------------+----+-----------+
-//        | matricula | nascimento | id | nome      |
-//        +-----------+------------+----+-----------+
-//        |    987654 | 2000-06-01 |  1 | Ana Zaira |
-//        +-----------+------------+----+-----------+
+//        +-----------+------------+----+--------------+
+//        | matricula | nascimento | id | nome         |
+//        +-----------+------------+----+--------------+
+//        |    987654 | 2000-06-01 |  1 | Ana Zaira    |
+//        |  20250002 | 2000-10-20 |  2 | Beatriz Yana |
+//        +-----------+------------+----+--------------+
+//        
+        System.out.println("> " + a1);
+        System.out.println("> " + a2);
         
-        System.out.println("> " + aluno);
+        List<Aluno> alunos = repository.findAll();
+        
+        for (Aluno aluno : alunos) {
+            System.out.println(">> " + aluno);
+        }
+        
+        // Note the idade, which is a value derived from the nascimento: null
+        // How to resolve?
+        // TODO Aluno needs adjustments
+//        >> Aluno{id=1, matricula=987654, nome=Ana Zaira, nascimento=2000-06-01, idade=null}
+//        >> Aluno{id=2, matricula=20250002, nome=Beatriz Yana, nascimento=2000-10-20, idade=null}
         
     }
 }

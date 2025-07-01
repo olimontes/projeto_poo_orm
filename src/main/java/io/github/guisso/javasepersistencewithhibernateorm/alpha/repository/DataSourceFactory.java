@@ -21,7 +21,7 @@ import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 /**
- * Data source factory for MySQL DBRMS
+ * Data source factory for MySQL RDBMS
  *
  * DDL: CREATE DATABASE gestaoescolar DEFAULT CHARACTER SET utf8mb4 COLLATE
  * utf8mb4_unicode_ci;

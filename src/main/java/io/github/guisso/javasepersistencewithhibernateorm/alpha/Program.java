@@ -18,6 +18,8 @@ package io.github.guisso.javasepersistencewithhibernateorm.alpha;
 
 import io.github.guisso.javasepersistencewithhibernateorm.alpha.aluno.Aluno;
 import io.github.guisso.javasepersistencewithhibernateorm.alpha.aluno.AlunoRepository;
+import io.github.guisso.javasepersistencewithhibernateorm.alpha.veiculo.Veiculo;
+import io.github.guisso.javasepersistencewithhibernateorm.alpha.veiculo.VeiculoRepository;
 import java.time.LocalDate;
 import java.util.List;
 
@@ -30,7 +32,7 @@ import java.util.List;
  */
 public class Program {
 
-    public static void main(String[] args) {
+    public static void alphaTests() {
         // Object to be persisted
         Aluno a1 = new Aluno();
         Aluno a2 = new Aluno();
@@ -90,5 +92,21 @@ public class Program {
 //        >> Aluno{id=1, matricula=987654, nome=Ana Zaira, nascimento=2000-06-01, idade=null}
 //        >> Aluno{id=2, matricula=20250002, nome=Beatriz Yana, nascimento=2000-10-20, idade=null}
         
+//        //
+//        // Tests with Veiculo
+//        //
+//        VeiculoRepository veiculoRepository = new VeiculoRepository();
+//        
+//        Veiculo v1 = new Veiculo();
+//        v1.setPlaca("ABC1D23");
+//        v1.setCor(Veiculo.Cor.VERMELHA);
+//        
+//        veiculoRepository.save(v1);
+//        
+//        Veiculo v2 = new Veiculo();
+//        v2.setPlaca("XYZ9876");
+//        v2.setCor(Veiculo.Cor.OUTRA);
+//        
+//        veiculoRepository.save(v2);
     }
 }

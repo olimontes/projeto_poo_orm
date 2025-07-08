@@ -19,6 +19,7 @@ package io.github.guisso.javasepersistencewithhibernateorm.beta.repository;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.MappedSuperclass;
 
 /**
  * Entity superclass for all entities
@@ -27,6 +28,7 @@ import jakarta.persistence.Id;
  * @version 0.1
  * @since 0.1, Jul 7, 2025
  */
+@MappedSuperclass
 public class ProjectEntity {
 
     @Id

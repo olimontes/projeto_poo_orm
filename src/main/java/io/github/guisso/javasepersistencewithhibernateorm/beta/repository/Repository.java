@@ -18,10 +18,10 @@ package io.github.guisso.javasepersistencewithhibernateorm.beta.repository;
 
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.EntityTransaction;
+import jakarta.persistence.Query;
 import jakarta.persistence.TypedQuery;
 import java.lang.reflect.ParameterizedType;
 import java.util.List;
-import org.hibernate.query.Query;
 
 /**
  * Generic repository
@@ -36,25 +36,26 @@ public abstract class Repository<T extends ProjectEntity>
 
     @Override
     public Long saveOrUpdate(T e) {
-        EntityManager em = DataSourceFactory.getEntityManager();
-        EntityTransaction tx = em.getTransaction();
 
-        try {
-            tx.begin();
-            if (e.getId() == null || e.getId() == 0) {
-                em.persist(e);
-            } else {
-                em.merge(e);
+        // try-with resources
+        try (EntityManager em = DataSourceFactory.getEntityManager()) {
+
+            EntityTransaction tx = em.getTransaction();
+
+            try {
+                tx.begin();
+                if (e.getId() == null || e.getId() == 0) {
+                    em.persist(e);
+                } else {
+                    em.merge(e);
+                }
+                tx.commit();
+            } catch (Exception ex) {
+                if (tx != null && tx.isActive()) {
+                    tx.rollback();
+                    throw ex;
+                }
             }
-            tx.commit();
-        } catch (Exception ex) {
-            if (tx != null && tx.isActive()) {
-                tx.rollback();
-                em.close();
-                throw ex;
-            }
-        } finally {
-            em.close();
         }
 
         return e.getId();
@@ -62,28 +63,50 @@ public abstract class Repository<T extends ProjectEntity>
 
     @Override
     public List<T> findAll() {
-        EntityManager em = DataSourceFactory.getEntityManager();
+        // try-with resources
+        try (EntityManager em = DataSourceFactory.getEntityManager()) {
 
-        try {
             TypedQuery<T> query = em.createQuery(
                     // Polimorphism applied
                     getJpqlFindAll(),
+                    // Reflection to get .class type
                     (Class<T>) ((ParameterizedType) getClass()
                             .getGenericSuperclass())
                             .getActualTypeArguments()[0]);
             return query.getResultList();
-        } finally {
-            em.close();
         }
     }
 
     @Override
     public T findById(Long id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        // try-with resources
+        try (EntityManager em = DataSourceFactory.getEntityManager()) {
+
+            TypedQuery<T> query = em.createQuery(
+                    // Polimorphism applied
+                    getJpqlFindById(),
+                    // Reflection to get .class type
+                    (Class<T>) ((ParameterizedType) getClass()
+                            .getGenericSuperclass())
+                            .getActualTypeArguments()[0]);
+
+            query.setParameter(0, id);
+
+            // The result or NoResultException
+//            return query.getSingleResult();
+//
+            // The result or null if there is no result
+            return query.getSingleResultOrNull();
+        }
     }
 
     @Override
     public boolean delete(T e) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public boolean delete(Long id) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

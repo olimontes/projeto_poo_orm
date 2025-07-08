@@ -102,12 +102,33 @@ public abstract class Repository<T extends ProjectEntity>
 
     @Override
     public boolean delete(T e) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        // Without JPQL version
+        try (EntityManager em = DataSourceFactory.getEntityManager()) {
+
+            EntityTransaction tx = em.getTransaction();
+            try {
+                tx.begin();
+                e = em.merge(e);
+                em.remove(e);
+                tx.commit();
+                return true;
+
+            } catch (Exception ex) {
+                if (tx != null && tx.isActive()) {
+                    tx.rollback();
+                    throw ex;
+                }
+            }
+
+            return false;
+        }
     }
 
     @Override
     public boolean delete(Long id) {
-        throw new UnsupportedOperationException("Not supported yet.");
+
+        
     }
 
 }

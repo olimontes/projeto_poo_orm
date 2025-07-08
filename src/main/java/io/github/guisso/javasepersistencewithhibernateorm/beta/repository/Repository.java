@@ -146,7 +146,7 @@ public abstract class Repository<T extends ProjectEntity>
                 tx.begin();
 
                 // No need for a typed query
-                Query query = em.createQuery(getJpqlDelete());
+                Query query = em.createQuery(getJpqlDeleteById());
 
                 // id definition
                 query.setParameter("id", id);

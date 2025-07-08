@@ -93,7 +93,7 @@ public abstract class Repository<T extends ProjectEntity>
                             .getGenericSuperclass())
                             .getActualTypeArguments()[0]);
 
-            query.setParameter(0, id);
+            query.setParameter("id", id);
 
             // The result or NoResultException
 //            return query.getSingleResult();

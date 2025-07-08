@@ -26,8 +26,11 @@ package io.github.guisso.javasepersistencewithhibernateorm;
 public class JavaSEPersistenceWithHibernateORM {
 
     public static void main(String[] args) {
-        // Alpha tests
-        io.github.guisso.javasepersistencewithhibernateorm.alpha.Program.alphaTests();
+//        // Alpha tests
+//        io.github.guisso.javasepersistencewithhibernateorm.alpha.Program.alphaTests();
+        
+        // Beta tests
+        io.github.guisso.javasepersistencewithhibernateorm.beta.Program.betaTests();
     }
 
 }

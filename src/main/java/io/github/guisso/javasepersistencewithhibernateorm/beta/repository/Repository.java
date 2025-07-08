@@ -128,7 +128,34 @@ public abstract class Repository<T extends ProjectEntity>
     @Override
     public boolean delete(Long id) {
 
-        
+        // With JPQL version
+        try (EntityManager em = DataSourceFactory.getEntityManager()) {
+
+            EntityTransaction tx = em.getTransaction();
+            try {
+                tx.begin();
+
+                // No need for a typed query
+                Query query = em.createQuery(getJpqlDelete());
+
+                // id definition
+                query.setParameter("id", id);
+
+                // Perform the deletion
+                int deletions = query.executeUpdate();
+
+                tx.commit();
+                return deletions > 0;
+
+            } catch (Exception ex) {
+                if (tx != null && tx.isActive()) {
+                    tx.rollback();
+                    throw ex;
+                }
+            }
+
+            return false;
+        }
     }
 
 }

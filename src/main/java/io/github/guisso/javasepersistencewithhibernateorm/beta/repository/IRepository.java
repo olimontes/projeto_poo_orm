@@ -34,7 +34,11 @@ public interface IRepository<T> {
 
     List<T> findAll();
 
+    String getJpqlFindById();
+
     T findById(Long id);
+
+    String getJpqlDelete();
 
     boolean delete(T e);
 

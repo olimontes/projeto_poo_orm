@@ -82,6 +82,7 @@ public abstract class Repository<T extends ProjectEntity>
         // try-with resources
         try (EntityManager em = DataSourceFactory.getEntityManager()) {
 
+            // OPTION A
             TypedQuery<T> query = em.createQuery(
                     // Polimorphism applied
                     getJpqlFindById(),
@@ -97,6 +98,15 @@ public abstract class Repository<T extends ProjectEntity>
 //
             // The result or null if there is no result
             return query.getSingleResultOrNull();
+            
+            //
+            // OPTION B
+            //
+//            return em.find(
+//                    // Reflection to get .class type
+//                    (Class<T>) ((ParameterizedType) getClass()
+//                            .getGenericSuperclass())
+//                            .getActualTypeArguments()[0], id);
         }
     }
 

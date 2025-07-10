@@ -18,6 +18,10 @@ package io.github.guisso.javasepersistencewithhibernateorm.beta;
 
 import io.github.guisso.javasepersistencewithhibernateorm.beta.aluno.Aluno;
 import io.github.guisso.javasepersistencewithhibernateorm.beta.aluno.AlunoRepository;
+import io.github.guisso.javasepersistencewithhibernateorm.beta.credencial.Credencial;
+import io.github.guisso.javasepersistencewithhibernateorm.beta.credencial.CredencialRepository;
+import io.github.guisso.javasepersistencewithhibernateorm.beta.usuario.Usuario;
+import io.github.guisso.javasepersistencewithhibernateorm.beta.usuario.UsuarioRepository;
 import java.time.LocalDate;
 
 /**
@@ -31,34 +35,57 @@ public class Program {
 
     public static void betaTests() {
         
-        AlunoRepository alunoRepository = new AlunoRepository();
-        Long id;
+//        AlunoRepository alunoRepository = new AlunoRepository();
+//        Long id;
+//
+//        Aluno a1 = new Aluno();
+//        a1.setNome("Ana Zaira");
+//        a1.setMatricula(123456789);
+//        a1.setNascimento(LocalDate.of(1999, 7, 1));
+//        
+//        alunoRepository.saveOrUpdate(a1);
+//        System.out.println("> " + a1);
+//        
+//        a1.setNome("Beariz Yana");
+//        
+//        id = alunoRepository.saveOrUpdate(a1);
+//        System.out.println("> " + a1);
+//        
+//        Aluno a2 = alunoRepository.findById(id);
+//        System.out.println("> " + a2);
+//        
+//        a2.setId(null);
+//        a2.setNome("Cecília Xerxes");
+//        
+//        alunoRepository.saveOrUpdate(a2);
+//        System.out.println("> " + a2);
+//        
+////        boolean excluded = alunoRepository.delete(id);
+//        boolean excluded = alunoRepository.delete(a2);
+//
+//        System.out.println("> " + (excluded ? "Excluded" : "Exclusion fails..."));
 
-        Aluno a1 = new Aluno();
-        a1.setNome("Ana Zaira");
-        a1.setMatricula(123456789);
-        a1.setNascimento(LocalDate.of(1999, 7, 1));
+        CredencialRepository credencialRepository = new CredencialRepository();
         
-        alunoRepository.saveOrUpdate(a1);
-        System.out.println("> " + a1);
+        Credencial c1 = new Credencial();
+        c1.setEmail("y@mail.com");
+        c1.setSenha("123456");
         
-        a1.setNome("Beariz Yana");
+//        credencialRepository.saveOrUpdate(c1);
+//        if(true) return;
         
-        id = alunoRepository.saveOrUpdate(a1);
-        System.out.println("> " + a1);
+        UsuarioRepository usuarioRepository = new UsuarioRepository();
         
-        Aluno a2 = alunoRepository.findById(id);
-        System.out.println("> " + a2);
+        Usuario u1 = new Usuario();
+        u1.setNome("Ana Zaira");
         
-        a2.setId(null);
-        a2.setNome("Cecília Xerxes");
+        u1.setCredencial(c1); // <---------------------------------------------
+        c1.setUsuario(u1); // <---------------------------------------------
         
-        alunoRepository.saveOrUpdate(a2);
-        System.out.println("> " + a2);
+        usuarioRepository.saveOrUpdate(u1);
         
-//        boolean excluded = alunoRepository.delete(id);
-        boolean excluded = alunoRepository.delete(a2);
-
-        System.out.println("> " + (excluded ? "Excluded" : "Exclusion fails..."));
+        Usuario u2 = usuarioRepository.findById(1L);
+        
+        System.out.println("> " + u2.getCredencial().getEmail());
     }
 }

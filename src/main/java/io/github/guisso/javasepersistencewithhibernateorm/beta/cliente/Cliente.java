@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.guisso.javasepersistencewithhibernateorm.beta.produto;
+package io.github.guisso.javasepersistencewithhibernateorm.beta.cliente;
 
 import io.github.guisso.javasepersistencewithhibernateorm.beta.repository.ProjectEntity;
 import jakarta.persistence.Column;
@@ -30,29 +30,17 @@ import jakarta.persistence.Persistence;
  * @author fgabr
  */
 @Entity
-public class Produto extends ProjectEntity
+public class Cliente extends ProjectEntity
         implements Serializable {
 
     @Column(nullable = true)
     private String nome;
 
     @Column(nullable = true)
-    private String descricao;
+    private String cpf;
 
     @Column(nullable = true)
-    private String tipo;
-
-    @Column(nullable = true)
-    private String material;
-
-    @Column(nullable = true)
-    private double peso;
-
-    @Column(nullable = true)
-    private double preco_venda;
-
-    @Column(nullable = true)
-    private int qtd_estoque;
+    private String email;
 
 //<editor-fold defaultstate="collapsed" desc="get/set">
     public String getNome() {
@@ -63,53 +51,20 @@ public class Produto extends ProjectEntity
         this.nome = nome;
     }
 
-    public String getDescricao() {
-        return descricao;
+    public String getCpf() {
+        return cpf;
     }
 
-    public void setDescricao(String descricao) {
-        this.descricao = descricao;
+    public void setCpf(String cpf) {
+        this.cpf = cpf;
     }
 
-    public String getTipo() {
-        return tipo;
+    public String getEmail() {
+        return email;
     }
 
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
-    }
-
-    public String getMaterial() {
-        return material;
-    }
-
-    public void setMaterial(String material) {
-        this.material = material;
-    }
-
-    public double getPeso() {
-        return peso;
-    }
-
-    public void setPeso(double peso) {
-        this.peso = peso;
-    }
-
-    public double getPreco_venda() {
-        return preco_venda;
-    }
-
-    public void setPreco_venda(double preco_venda) {
-        this.preco_venda = preco_venda;
-    }
-
-    public int getQtd_estoque() {
-        return qtd_estoque;
-    }
-
-    public void setQtd_estoque(int qtd_estoque) {
-        this.qtd_estoque = qtd_estoque;
+    public void setEmail(String email) {
+        this.email = email;
     }
     //</editor-fold>
-
 }

@@ -18,6 +18,8 @@ package io.github.guisso.javasepersistencewithhibernateorm.beta;
 
 //import io.github.guisso.javasepersistencewithhibernateorm.beta.aluno.Aluno;
 //import io.github.guisso.javasepersistencewithhibernateorm.beta.aluno.AlunoRepository;
+import io.github.guisso.javasepersistencewithhibernateorm.beta.cliente.Cliente;
+import io.github.guisso.javasepersistencewithhibernateorm.beta.cliente.ClienteRepository;
 import java.time.LocalDate;
 import io.github.guisso.javasepersistencewithhibernateorm.beta.produto.Produto;
 import io.github.guisso.javasepersistencewithhibernateorm.beta.produto.ProdutoRepository;
@@ -30,7 +32,7 @@ import io.github.guisso.javasepersistencewithhibernateorm.beta.produto.ProdutoRe
  * @since 0.1, Jul 1, 2025
  */
 public class Program {
-    
+
     public static void betaTests() {
 
 //        AlunoRepository alunoRepository = new AlunoRepository();
@@ -87,7 +89,7 @@ public class Program {
 //        System.out.println("> " + u2.getCredencial().getEmail());
 
  ProdutoRepository produtoRepository = new ProdutoRepository();
-        
+
         Long id;
         Produto p1 = new Produto();
         p1.setNome("Anel");
@@ -98,19 +100,43 @@ public class Program {
         p1.setPeso(5);
         p1.setQtd_estoque(26);
         p1.setTipo("Cravejado");
-        
+
         //Salvando um produto
         produtoRepository.saveOrUpdate(p1);
         System.out.println("> " + p1);
-        
+
         //Buscando um produto pelo id
         Produto p2 = produtoRepository.findById(1L);
         System.out.println("> " + p2.getNome());
-        
+
         //Atualizando um produto e salvando
         p2.setNome("Corrente");
         produtoRepository.saveOrUpdate(p2);
         System.out.println("> " + p2.getNome());
+
+        ////////////////////////////////////////////////////////////////////////
+        
+        
+        ClienteRepository clienteRepository = new ClienteRepository();
+        //Long id;
+        Cliente c1 = new Cliente();
+        c1.setNome("Paulo");
+        c1.setCpf("123456577786793");
+        c1.setEmail("paulo@gmail.com");
+
+        //Salvando um cliente
+        clienteRepository.saveOrUpdate(c1);
+        System.out.println("> " + c1.getNome());
+
+        //Buscando um produto pelo id
+        Cliente c2 = clienteRepository.findById(1L);
+        System.out.println("> " + c2.getNome());
+
+        //Atualizando um produto e salvando
+        c2.setNome("Pedro");
+        clienteRepository.saveOrUpdate(c2);
+        System.out.println("> " + c2.getNome());
+
     }
-    
+
 }

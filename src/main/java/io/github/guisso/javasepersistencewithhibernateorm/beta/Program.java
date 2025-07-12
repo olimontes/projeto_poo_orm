@@ -20,6 +20,8 @@ package io.github.guisso.javasepersistencewithhibernateorm.beta;
 //import io.github.guisso.javasepersistencewithhibernateorm.beta.aluno.AlunoRepository;
 import io.github.guisso.javasepersistencewithhibernateorm.beta.cliente.Cliente;
 import io.github.guisso.javasepersistencewithhibernateorm.beta.cliente.ClienteRepository;
+import io.github.guisso.javasepersistencewithhibernateorm.beta.itempedido.ItemPedido;
+import io.github.guisso.javasepersistencewithhibernateorm.beta.itempedido.ItemPedidoRepository;
 import java.time.LocalDate;
 import io.github.guisso.javasepersistencewithhibernateorm.beta.produto.Produto;
 import io.github.guisso.javasepersistencewithhibernateorm.beta.produto.ProdutoRepository;
@@ -116,7 +118,6 @@ public class Program {
 
         ////////////////////////////////////////////////////////////////////////
         
-        
         ClienteRepository clienteRepository = new ClienteRepository();
         //Long id;
         Cliente c1 = new Cliente();
@@ -128,14 +129,35 @@ public class Program {
         clienteRepository.saveOrUpdate(c1);
         System.out.println("> " + c1.getNome());
 
-        //Buscando um produto pelo id
+        //Buscando um cliente pelo id
         Cliente c2 = clienteRepository.findById(1L);
         System.out.println("> " + c2.getNome());
 
-        //Atualizando um produto e salvando
+        //Atualizando um cliente e salvando
         c2.setNome("Pedro");
         clienteRepository.saveOrUpdate(c2);
         System.out.println("> " + c2.getNome());
+
+        ////////////////////////////////////////////////////////////////////////
+        
+        ItemPedidoRepository itemPedidoRepository = new ItemPedidoRepository();
+        ItemPedido i1 = new ItemPedido();
+        i1.setQuantidade(3);
+
+        //Salvando um itemPedido
+        itemPedidoRepository.saveOrUpdate(i1);
+        System.out.println("> " + i1.getQuantidade());
+
+        //Buscando um ItemPedido pelo id
+        ItemPedido i2 = itemPedidoRepository.findById(1L);
+        System.out.println("> " + i2.getQuantidade());
+
+        //Atualizando um itemPedido e salvando
+        i2.setQuantidade(5);
+        itemPedidoRepository.saveOrUpdate(i2);
+        System.out.println("> " + i2.getQuantidade());
+        
+        ////////////////////////////////////////////////////////////////////////
 
     }
 

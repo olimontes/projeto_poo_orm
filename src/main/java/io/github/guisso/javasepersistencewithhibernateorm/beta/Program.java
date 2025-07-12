@@ -22,9 +22,12 @@ import io.github.guisso.javasepersistencewithhibernateorm.beta.cliente.Cliente;
 import io.github.guisso.javasepersistencewithhibernateorm.beta.cliente.ClienteRepository;
 import io.github.guisso.javasepersistencewithhibernateorm.beta.itempedido.ItemPedido;
 import io.github.guisso.javasepersistencewithhibernateorm.beta.itempedido.ItemPedidoRepository;
+import io.github.guisso.javasepersistencewithhibernateorm.beta.pedido.Pedido;
+import io.github.guisso.javasepersistencewithhibernateorm.beta.pedido.PedidoRepository;
 import java.time.LocalDate;
 import io.github.guisso.javasepersistencewithhibernateorm.beta.produto.Produto;
 import io.github.guisso.javasepersistencewithhibernateorm.beta.produto.ProdutoRepository;
+import java.time.LocalDateTime;
 
 /**
  * Runs tests of the "Beta" version
@@ -145,8 +148,8 @@ public class Program {
         i1.setQuantidade(3);
 
         //Salvando um itemPedido
-        itemPedidoRepository.saveOrUpdate(i1);
-        System.out.println("> " + i1.getQuantidade());
+        //itemPedidoRepository.saveOrUpdate(i1);
+        //System.out.println("> " + i1.getQuantidade());
 
         //Buscando um ItemPedido pelo id
         ItemPedido i2 = itemPedidoRepository.findById(1L);
@@ -156,8 +159,43 @@ public class Program {
         i2.setQuantidade(5);
         itemPedidoRepository.saveOrUpdate(i2);
         System.out.println("> " + i2.getQuantidade());
-        
+
         ////////////////////////////////////////////////////////////////////////
+
+    PedidoRepository pedidoRepository = new PedidoRepository();
+
+// Buscando cliente já existente
+        Cliente clientePedido = clienteRepository.findById(1L);
+        if (clientePedido == null) {
+            System.out.println("Cliente com ID 1 não encontrado!");
+            return;
+        }
+
+        Pedido pedido1 = new Pedido();
+        pedido1.setCliente(clientePedido);
+        pedido1.setStatus(Pedido.StatusPedido.CRIADO);
+        pedido1.setDataCriacao(LocalDateTime.now());
+
+// Criando o item e associando ao pedido via método helper
+        ItemPedido item1 = new ItemPedido();
+        item1.setQuantidade(3);
+
+// Método addItemPedido deve ser implementado para manter as duas associações consistentes
+        pedido1.addItemPedido(item1);
+
+// Salvando o pedido com os itens em cascata
+        pedidoRepository.saveOrUpdate(pedido1);
+
+        System.out.println("> Pedido salvo com ID: " + pedido1.getId());
+
+// Buscando o pedido para confirmar
+        Pedido pedido2 = pedidoRepository.findById(pedido1.getId());
+        System.out.println("> Pedido do cliente: " + pedido2.getCliente().getNome());
+
+// Atualizando status do pedido
+        pedido2.setStatus(Pedido.StatusPedido.ENVIADO);
+        pedidoRepository.saveOrUpdate(pedido2);
+        System.out.println("> Status atualizado: " + pedido2.getStatus());
 
     }
 

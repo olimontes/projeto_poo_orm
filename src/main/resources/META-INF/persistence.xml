@@ -11,6 +11,7 @@
         <class>io.github.guisso.javasepersistencewithhibernateorm.beta.produto.Produto</class>
         <class>io.github.guisso.javasepersistencewithhibernateorm.beta.cliente.Cliente</class>
         <class>io.github.guisso.javasepersistencewithhibernateorm.beta.itempedido.ItemPedido</class>
+        <class>io.github.guisso.javasepersistencewithhibernateorm.beta.pedido.Pedido</class>
 <!--        <class>io.github.guisso.javasepersistencewithhibernateorm.beta.aluno.Aluno</class>
         <class>io.github.guisso.javasepersistencewithhibernateorm.beta.turma.Turma</class>
          Você pode adicionar mais <class> aqui, se necessário -->

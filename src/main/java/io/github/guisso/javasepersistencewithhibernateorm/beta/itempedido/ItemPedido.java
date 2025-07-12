@@ -16,23 +16,34 @@
  */
 package io.github.guisso.javasepersistencewithhibernateorm.beta.itempedido;
 
-import io.github.guisso.javasepersistencewithhibernateorm.beta.produto.Produto;
+import io.github.guisso.javasepersistencewithhibernateorm.beta.pedido.Pedido;
 import io.github.guisso.javasepersistencewithhibernateorm.beta.repository.ProjectEntity;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
 import java.io.Serializable;
-
-import jakarta.persistence.EntityManager;
-import jakarta.persistence.EntityManagerFactory;
-import jakarta.persistence.Persistence;
 
 /**
  *
  * @author fgabr
  */
 @Entity
+
 public class ItemPedido extends ProjectEntity
         implements Serializable {
+
+    @ManyToOne(optional = false)
+    @JoinColumn(name = "pedido_id") // nome da coluna FK no banco
+    private Pedido pedido;
+
+    public Pedido getPedido() {
+        return pedido;
+    }
+
+    public void setPedido(Pedido pedido) {
+        this.pedido = pedido;
+    }
 
 //TODO relacionamento a ser feito mais frente
 //    @Column(nullable = true)
@@ -49,5 +60,7 @@ public class ItemPedido extends ProjectEntity
         this.quantidade = quantidade;
     }
     //</editor-fold>
+
+  
 
 }

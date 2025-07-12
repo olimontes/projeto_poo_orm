@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package io.github.guisso.javasepersistencewithhibernateorm.beta.aluno;
+package io.github.guisso.javasepersistencewithhibernateorm.beta.produto;
 
 import io.github.guisso.javasepersistencewithhibernateorm.beta.repository.Repository;
 
@@ -25,22 +25,22 @@ import io.github.guisso.javasepersistencewithhibernateorm.beta.repository.Reposi
  * @version 0.1
  * @since 0.1, Jul 7, 2025
  */
-public class AlunoRepository
-        extends Repository<Aluno> {
+public class ProdutoRepository
+        extends Repository<Produto> {
 
     @Override
     public String getJpqlFindAll() {
-        return "SELECT a FROM Aluno a";
+        return "SELECT p FROM Produto p";
     }
 
     @Override
     public String getJpqlFindById() {
-        return "SELECT a FROM Aluno a WHERE a.id = :id";
+        return "SELECT p FROM Produto p WHERE p.id = :id";
     }
 
     @Override
     public String getJpqlDeleteById() {
-        return "DELETE FROM Aluno a WHERE a.id = :id";
+        return "DELETE FROM Produto p WHERE p.id = :id";
     }
 
 }
